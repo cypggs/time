@@ -1,86 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Time Display</title>
+    <!-- 原有head内容保持不变 -->
     <style>
-        body {
-            background-color: #0a192f;
-            color: #64ffda;
-            font-family: 'Courier New', monospace;
-        }
-        .clock-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .clock {
-            background: rgba(10, 25, 47, 0.7);
-            border: 1px solid #64ffda;
+        /* 新增全屏地图按钮样式 */
+        #fullscreenMap {
+            position: fixed;
+            bottom: 20px;
+            right: 120px;
+            padding: 10px 15px;
+            background: #ccd6f6;
+            color: #0a192f;
+            border: none;
             border-radius: 5px;
-            padding: 15px;
-            text-align: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s;
         }
-        .city {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        .time {
-            font-size: 2em;
-            color: #ccd6f6;
+        #fullscreenMap:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(204, 214, 246, 0.4);
         }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center">Global Time Display</h1>
-    <div class="clock-container" id="clocks"></div>
+    <!-- 原有body内容 -->
+    
+    <!-- 在原有地图模式按钮后添加 -->
+    <button id="fullscreenMap">🗺️ 全屏地图</button>
 
     <script>
-        const cities = [
-            { name: "New York 🇺🇸 纽约", timezone: "America/New_York" },
-            { name: "London 🇬🇧 伦敦", timezone: "Europe/London" },
-            { name: "Tokyo 🇯🇵 东京", timezone: "Asia/Tokyo" },
-            { name: "Sydney 🇦🇺 悉尼", timezone: "Australia/Sydney" },
-            { name: "Dubai 🇦🇪 迪拜", timezone: "Asia/Dubai" },
-            { name: "Beijing 🇨🇳 北京", timezone: "Asia/Shanghai" },
-            { name: "Rio de Janeiro 🇧🇷 里约", timezone: "America/Sao_Paulo" },
-            { name: "Cape Town 🇿🇦 开普敦", timezone: "Africa/Johannesburg" },
-            { name: "Moscow 🇷🇺 莫斯科", timezone: "Europe/Moscow" },
-            { name: "Toronto 🇨🇦 多伦多", timezone: "America/Toronto" },
-            { name: "Singapore 🇸🇬 新加坡", timezone: "Asia/Singapore" },
-            { name: "Auckland 🇳🇿 奥克兰", timezone: "Pacific/Auckland" }
-        ];
-
-        function updateClocks() {
-            const container = document.getElementById('clocks');
-            container.innerHTML = '';
-            
-            cities.forEach(city => {
-                const options = {
-                    timeZone: city.timezone,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                };
-                
-                const timeString = new Date().toLocaleTimeString('en-US', options);
-                
-                const clockDiv = document.createElement('div');
-                clockDiv.className = 'clock';
-                clockDiv.innerHTML = `
-                    <div class="city">${city.name}</div>
-                    <div class="time">${timeString}</div>
-                `;
-                
-                container.appendChild(clockDiv);
-            });
-        }
-
-        setInterval(updateClocks, 1000);
-        updateClocks();
+        // 新增跳转逻辑
+        document.getElementById('fullscreenMap').addEventListener('click', () => {
+            window.location.href = 'map.html';
+        });
     </script>
 </body>
 </html>
