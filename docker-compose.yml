@@ -1,0 +1,7 @@
+version: '3'
+services:
+  world-clock:
+    build: .
+    ports:
+      - "59843:59843"
+    restart: unless-stopped
