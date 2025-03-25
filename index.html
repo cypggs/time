@@ -1,39 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- 原有head内容保持不变 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Time Display</title>
     <style>
-        /* 新增全屏地图按钮样式 */
+        body {
+            background-color: #0a192f;
+            color: #64ffda;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ccd6f6;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+        }
+        .clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .clock {
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid #64ffda;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .city {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #64ffda;
+        }
+        .time {
+            font-size: 2em;
+            color: #ccd6f6;
+            letter-spacing: 2px;
+        }
+        #mapToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 18px;
+            background: #64ffda;
+            color: #0a192f;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
         #fullscreenMap {
             position: fixed;
             bottom: 20px;
-            right: 120px;
-            padding: 10px 15px;
+            right: 140px;
+            padding: 12px 18px;
             background: #ccd6f6;
             color: #0a192f;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             z-index: 1000;
-            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
-        #fullscreenMap:hover {
+        #mapToggle:hover, #fullscreenMap:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(204, 214, 246, 0.4);
+            box-shadow: 0 6px 12px rgba(100, 255, 218, 0.3);
+        }
+        #worldMap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://jsdelivr.net/npm/world-atlas@2/land-110m.png') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+            display: none;
+        }
+        .map-mode .clock {
+            position: absolute;
+            background: rgba(10, 25, 47, 0.9);
+            transform: scale(0.9);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
         }
     </style>
 </head>
 <body>
-    <!-- 原有body内容 -->
+    <div id="worldMap"></div>
     
-    <!-- 在原有地图模式按钮后添加 -->
+    <h1>Global Time Display</h1>
+    <div class="clock-container" id="clocks"></div>
+
+    <button id="mapToggle">🌍 地图模式</button>
     <button id="fullscreenMap">🗺️ 全屏地图</button>
 
     <script>
-        // 新增跳转逻辑
+        // 完整城市数据（含坐标）
+        const cities = [
+            { name: "New York 🇺🇸 纽约", timezone: "America/New_York", coords: [40.7128, -74.0060] },
+            { name: "London 🇬🇧 伦敦", timezone: "Europe/London", coords: [51.5074, -0.1278] },
+            { name: "Tokyo 🇯🇵 东京", timezone: "Asia/Tokyo", coords: [35.6762, 139.6503] },
+            { name: "Sydney 🇦🇺 悉尼", timezone: "Australia/Sydney", coords: [-33.8688, 151.2093] },
+            { name: "Dubai 🇦🇪 迪拜", timezone: "Asia/Dubai", coords: [25.2048, 55.2708] },
+            { name: "Beijing 🇨🇳 北京", timezone: "Asia/Shanghai", coords: [39.9042, 116.4074] },
+            { name: "Rio de Janeiro 🇧🇷 里约", timezone: "America/Sao_Paulo", coords: [-22.9068, -43.1729] },
+            { name: "Cape Town 🇿🇦 开普敦", timezone: "Africa/Johannesburg", coords: [-33.9249, 18.4241] },
+            { name: "Moscow 🇷🇺 莫斯科", timezone: "Europe/Moscow", coords: [55.7558, 37.6173] },
+            { name: "Toronto 🇨🇦 多伦多", timezone: "America/Toronto", coords: [43.6532, -79.3832] },
+            { name: "Singapore 🇸🇬 新加坡", timezone: "Asia/Singapore", coords: [1.3521, 103.8198] },
+            { name: "Auckland 🇳🇿 奥克兰", timezone: "Pacific/Auckland", coords: [-36.8485, 174.7633] }
+        ];
+
+        // 完整时钟更新函数
+        function updateClocks() {
+            const container = document.getElementById('clocks');
+            const isMapMode = document.body.classList.contains('map-mode');
+            
+            container.innerHTML = '';
+            
+            cities.forEach(city => {
+                const options = {
+                    timeZone: city.timezone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                
+                const timeString = new Date().toLocaleTimeString('en-US', options);
+                const clockDiv = document.createElement('div');
+                clockDiv.className = 'clock';
+                
+                if(isMapMode) {
+                    clockDiv.style.left = `${(city.coords[1] + 180) / 3.6}%`;
+                    clockDiv.style.top = `${(90 - city.coords[0]) / 1.8}%`;
+                }
+                
+                clockDiv.innerHTML = `
+                    <div class="city">${city.name}</div>
+                    <div class="time">${timeString}</div>
+                `;
+                container.appendChild(clockDiv);
+            });
+        }
+
+        // 完整地图模式切换逻辑
+        document.getElementById('mapToggle').addEventListener('click', function() {
+            const map = document.getElementById('worldMap');
+            document.body.classList.toggle('map-mode');
+            map.style.display = document.body.classList.contains('map-mode') ? 'block' : 'none';
+            this.textContent = document.body.classList.contains('map-mode') ? '⏱ 时钟模式' : '🌍 地图模式';
+            updateClocks();
+        });
+
+        // 完整全屏地图跳转逻辑
         document.getElementById('fullscreenMap').addEventListener('click', () => {
             window.location.href = 'map.html';
         });
+
+        // 完整初始化代码
+        setInterval(updateClocks, 1000);
+        updateClocks();
     </script>
 </body>
 </html>
