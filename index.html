@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Time Display</title>
+    <style>
+        body {
+            background-color: #0a192f;
+            color: #64ffda;
+            font-family: 'Courier New', monospace;
+        }
+        .clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .clock {
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid #64ffda;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        .city {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .time {
+            font-size: 2em;
+            color: #ccd6f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Global Time Display</h1>
+    <div class="clock-container" id="clocks"></div>
+
+    <script>
+        const cities = [
+            { name: "New York 🇺🇸 纽约", timezone: "America/New_York" },
+            { name: "London 🇬🇧 伦敦", timezone: "Europe/London" },
+            { name: "Tokyo 🇯🇵 东京", timezone: "Asia/Tokyo" },
+            { name: "Sydney 🇦🇺 悉尼", timezone: "Australia/Sydney" },
+            { name: "Dubai 🇦🇪 迪拜", timezone: "Asia/Dubai" },
+            { name: "Beijing 🇨🇳 北京", timezone: "Asia/Shanghai" }
+        ];
+
+        function updateClocks() {
+            const container = document.getElementById('clocks');
+            container.innerHTML = '';
+            
+            cities.forEach(city => {
+                const options = {
+                    timeZone: city.timezone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                
+                const timeString = new Date().toLocaleTimeString('en-US', options);
+                
+                const clockDiv = document.createElement('div');
+                clockDiv.className = 'clock';
+                clockDiv.innerHTML = `
+                    <div class="city">${city.name}</div>
+                    <div class="time">${timeString}</div>
+                `;
+                
+                container.appendChild(clockDiv);
+            });
+        }
+
+        setInterval(updateClocks, 1000);
+        updateClocks();
+    </script>
+</body>
+</html>
