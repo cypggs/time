@@ -12,14 +12,11 @@
         }
         .clock {
             position: absolute;
-            background: rgba(10, 25, 47, 0.9);
-            border: 1px solid #64ffda;
-            border-radius: 8px;
-            padding: 10px;
             text-align: center;
             transform: translate(-50%, -50%);
             min-width: 100px;
-            box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            color: #ccd6f6; /* 默认时间颜色 */
+            text-shadow: 1px 1px 2px #000, -1px -1px 2px #000; /* 阴影避免文字被地图背景干扰 */
         }
         .back-btn {
             position: fixed;
