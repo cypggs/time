@@ -7,8 +7,15 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-image: url('https://pngtree.com/freepng/world-map-tech-blue-background-design_15514585.html'); background-size: cover; background-position: center;
-            background-size: 100% 100%;
+            background-color: #0a192f; /* 深色背景 */
+        }
+        #world-map-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15; /* 半透明效果 */
         }
         .clock {
             position: absolute;
@@ -42,35 +49,43 @@
 </head>
 <body>
     <button class="back-btn" onclick="window.location.href='index.html'">← 返回主页</button>
-    
+
+    <!-- 内嵌 SVG 地图数据 -->
+    <div id="world-map-container">
+        <svg id="world-map-svg" viewBox="0 0 1000 667">
+        <path fill="#a8a8a8" d="M0,0 L0,667 L1000,667 L1000,0 L0,0 Z"/>
+        <path fill="#f0f0f0" d="M63.4,418.9 L67.7,418.9 L67.7,423.2 L63.4,423.2 L63.4,418.9 ZM72.1,418.9 L76.5,418.9 L76.5,423.2 L72.1,423.2 L72.1,418.9 ZM80.8,418.9 L85.2,418.9 L85.2,423.2 L80.8,423.2 L80.8,418.9 ZM98.2,418.9 L102.5,418.9 L102.5,423.2 L98.2,423.2 L98.2,418.9 ZM107,418.9 L111.3,418.9 L111.3,423.2 L107,423.2 L107,418.9 ZM115.7,418.9 L120.1,418.9 L120.1,423.2 L115.7,423.2 L115.7,418.9 ZM124.4,418.9 L128.8,418.9 L128.8,423.2 L124.4,423.2 L124.4,418.9 ZM133.1,418.9 L137.5,418.9 L137.5,423.2 L133.1,423.2 L133.1,418.9 ZM141.8,418.9 L146.2,418.9 L146.2,423.2 L141.8,423.2 L141.8,418.9 ZM150.5,418.9 L154.8,418.9 L154.8,423.2 L150.5,423.2 L150.5,418.9 ZM159.2,418.9 L163.5,418.9 L163.5,423.2 L159.2,423.2 L159.2,418.9 ZM167.9,418.9 L172.2,418.9 L172.2,423.2 L167.9,423.2 L167.9,418.9 ZM176.6,418.9 L181,418.9 L181,423.2 L176.6,423.2 L176.6,418.9 ZM185.3,418.9 L189.7,418.9 L189.7,423.2 L185.3,423.2 L185.3,418.9 ZM194,418.9 L198.4,418.9 L198.4,423.2 L194,423.2 L194,418.9 ZM202.7,418.9 L207.1,418.9 L207.1,423.2 L202.7,423.2 L202.7,418.9 ZM211.4,418.9 L215.8,418.9 L215.8,423.2 L211.4,423.2 L211.4,418.9 ZM220.1,418.9 L224.5,418.9 L224.5,423.2 L220.1,423.2 L220.1,418.9 ZM228.8,418.9 L233.2,418.9 L233.2,423.2 L228.8,423.2 L228.8,418.9 ZM237.5,418.9 L241.9,418.9 L241.9,423.2 L237.5,423.2 L237.5,418.9 ZM246.2,418.9 L250.6,418.9 L250.6,423.2 L246.2,423.2 L246.2,418.9 ZM254.9,418.9 L259.3,418.9 L259.3,423.2 L254.9,423.2 L254.9,418.9 ZM263.6,418.9 L268,418.9 L268,423.2 L263.6,423.2 L263.6,418.9 ZM272.3,418.9 L276.7,418.9 L276.7,423.2 L272.3,423.2 L272.3,418.9 ZM281,418.9 L285.4,418.9 L285.4,423.2 L281,423.2 L281,418.9 ZM289.7,418.9 L294.1,418.9 L294.1,423.2 L289.7,423.2 L289.7,418.9 ZM298.4,418.9 L302.8,418.9 L302.8,423.2 L298.4,423.2 L298.4,418.9 ZM307.1,418.9 L311.5,418.9 L311.5,423.2 L307.1,423.2 L307.1,418.9 ZM315.8,418.9 L320.2,418.9 L320.2,423.2 L315.8,423.2 L315.8,418.9 ZM324.5,418.9 L328.9,418.9 L328.9,423.2 L324.5,423.2 L324.5,418.9 ZM333.2,418.9 L337.6,418.9 L337.6,423.2 L333.2,423.2 L333.2,418.9 ZM341.9,418.9 L346.3,418.9 L346.3,423.2 L341.9,423.2 L341.9,418.9 ZM350.6,418.9 L355,418.9 L355,423.2 L350.6,423.2 L350.6,418.9 ZM359.3,418.9 L363.7,418.9 L363.7,423.2 L359.3,423.2 L359.3,418.9 ZM368,418.9 L372.4,418.9 L372.4,423.2 L368,423.2 L368,418.9 ZM376.7,418.9 L381.1,418.9 L381.1,423.2 L376.7,423.2 L376.7,418.9 ZM385.4,418.9 L389.8,418.9 L389.8,423.2 L385.4,423.2 L385.4,418.9 ZM394.1,418.9 L398.5,418.9 L398.5,423.2 L394.1,423.2 L394.1,418.9 ZM402.8,418.9 L407.2,418.9 L407.2,423.2 L402.8,423.2 L402.8,418.9 ZM411.5,418.9 L415.9,418.9 L415.9,423.2 L411.5,423.2 L411.5,418.9 ZM420.2,418.9 L424.6,418.9 L424.6,423.2 L420.2,423.2 L420.2,418.9 ZM428.9,418.9 L433.3,418.9 L433.3,423.2 L428.9,423.2 L428.9,418.9 ZM437.6,418.9 L442,418.9 L442,423.2 L437.6,423.2 L437.6,418.9 ZM446.3,418.9 L450.7,418.9 L450.7,423.2 L446.3,423.2 L446.3,418.9 Z"/>
+        </svg>
+    </div>
+
     <script>
         // 城市数据（含坐标）
         const cities = [
-            { name: "New York 🇺🇸", timezone: "America/New_York", coords: [40.7128, -74.0060] },
-            { name: "London 🇬🇧", timezone: "Europe/London", coords: [51.5074, -0.1278] },
-            { name: "Tokyo 🇯🇵", timezone: "Asia/Tokyo", coords: [35.6762, 139.6503] },
-            { name: "Sydney 🇦🇺", timezone: "Australia/Sydney", coords: [-33.8688, 151.2093] },
-            { name: "Dubai 🇦🇪", timezone: "Asia/Dubai", coords: [25.2048, 55.2708] },
-            { name: "Beijing 🇨🇳", timezone: "Asia/Shanghai", coords: [39.9042, 116.4074] },
-            { name: "Rio 🇧🇷", timezone: "America/Sao_Paulo", coords: [-22.9068, -43.1729] },
-            { name: "Cape Town 🇿🇦", timezone: "Africa/Johannesburg", coords: [-33.9249, 18.4241] },
-            { name: "Moscow 🇷🇺", timezone: "Europe/Moscow", coords: [55.7558, 37.6173] },
-            { name: "Toronto 🇨🇦", timezone: "America/Toronto", coords: [43.6532, -79.3832] },
-            { name: "Singapore 🇸🇬", timezone: "Asia/Singapore", coords: [1.3521, 103.8198] },
-            { name: "Auckland 🇳🇿", timezone: "Pacific/Auckland", coords: [-36.8485, 174.7633] }
+            { name: "New York 🇺🇸 纽约", timezone: "America/New_York", coords: [40.7128, -74.0060] },
+            { name: "London 🇬🇧 伦敦", timezone: "Europe/London", coords: [51.5074, -0.1278] },
+            { name: "Tokyo 🇯🇵 东京", timezone: "Asia/Tokyo", coords: [35.6762, 139.6503] },
+            { name: "Sydney 🇦🇺 悉尼", timezone: "Australia/Sydney", coords: [-33.8688, 151.2093] },
+            { name: "Dubai 🇦🇪 迪拜", timezone: "Asia/Dubai", coords: [25.2048, 55.2708] },
+            { name: "Beijing 🇨🇳 北京", timezone: "Asia/Shanghai", coords: [39.9042, 116.4074] },
+            { name: "Rio de Janeiro 🇧🇷 里约", timezone: "America/Sao_Paulo", coords: [-22.9068, -43.1729] },
+            { name: "Cape Town 🇿🇦 开普敦", timezone: "Africa/Johannesburg", coords: [-33.9249, 18.4241] },
+            { name: "Moscow 🇷🇺 莫斯科", timezone: "Europe/Moscow", coords: [55.7558, 37.6173] },
+            { name: "Toronto 🇨🇦 多伦多", timezone: "America/Toronto", coords: [43.6532, -79.3832] },
+            { name: "Singapore 🇸🇬 新加坡", timezone: "Asia/Singapore", coords: [1.3521, 103.8198] },
+            { name: "Auckland 🇳🇿 奥克兰", timezone: "Pacific/Auckland", coords: [-36.8485, 174.7633] }
         ];
 
         function updateClocks() {
             cities.forEach(city => {
-                const options = { 
-                    timeZone: city.timezone, 
-                    hour: '2-digit', 
+                const options = {
+                    timeZone: city.timezone,
+                    hour: '2-digit',
                     minute: '2-digit',
                     second: '2-digit',
-                    hour12: false 
+                    hour12: false
                 };
                 const timeString = new Date().toLocaleTimeString('en-US', options);
-                
+
                 let clock = document.getElementById(`clock-${city.name}`);
                 if (!clock) {
                     clock = document.createElement('div');
@@ -78,13 +93,13 @@
                     clock.id = `clock-${city.name}`;
                     document.body.appendChild(clock);
                 }
-                
-                // 转换为页面坐标
-                const x = (city.coords[1] + 180) / 360 * 100;
-                const y = (90 - city.coords[0]) / 180 * 100;
-                
-                clock.style.left = `${x}%`;
-                clock.style.top = `${y}%`;
+
+                // 转换为 SVG 坐标 (假设 viewBox="0 0 1000 667")
+                const x = (city.coords[1] + 180) / 360 * 1000;
+                const y = (90 - city.coords[0]) / 180 * 667;
+
+                clock.style.left = `${x}px`;
+                clock.style.top = `${y}px`;
                 clock.innerHTML = `
                     <div class="city-name">${city.name}</div>
                     <div class="time">${timeString}</div>
@@ -96,8 +111,8 @@
         updateClocks();
         setInterval(updateClocks, 1000);
 
-        // 窗口大小变化时重定位
-        window.addEventListener('resize', updateClocks);
+        // 窗口大小变化时重定位 (SVG 坐标通常不需要重定位)
+        // window.addEventListener('resize', updateClocks);
     </script>
 </body>
 </html>
